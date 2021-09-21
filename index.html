@@ -21,7 +21,7 @@
   <body>
     <div class="center">
       <h2>Today</h2>
-      <h4 id="today"></h4>
+      <h4 id="date"></h4>
       <p id="moon" class="large"></p>
       <p id="description"></p>
       <p class="footer">
@@ -43,12 +43,14 @@
         descArr.push(capitalizeFirstLetter(s));
       }
 
-      $('#today').text(
-        today.toLocaleDateString('en-gb', {
+      $('#date').text(
+        `${new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(
+          today
+        )} ${today.toLocaleDateString('en-us', {
           year: 'numeric',
           month: 'long',
           day: 'numeric',
-        })
+        })}`
       );
 
       $('#moon').text(moon.display);
