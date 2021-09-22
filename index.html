@@ -22,6 +22,7 @@
     <div class="center">
       <h2>Today</h2>
       <h4 id="date"></h4>
+      <h4 id="time"></h4>
       <p id="moon" class="large"></p>
       <p id="description"></p>
       <p class="footer">
@@ -43,8 +44,10 @@
         descArr.push(capitalizeFirstLetter(s));
       }
 
+      $('#time').text(today.toLocaleTimeString('en-US'));
+
       $('#date').text(
-        `${new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(
+        `${new Intl.DateTimeFormat('en-US', { weekday: 'short' }).format(
           today
         )} ${today.toLocaleDateString('en-us', {
           year: 'numeric',
@@ -55,10 +58,15 @@
 
       $('#moon').text(moon.display);
 
-      $('#description').text(descArr.join(' '));
+      $('#description').text(`It's ${descArr.join(' ')}!`);
 
       function capitalizeFirstLetter(str) {
         return str.charAt(0).toUpperCase() + str.slice(1);
+      }
+
+      let intervalId = setInterval(updateTime, 1000);
+      function updateTime() {
+        $('#time').text(new Date().toLocaleTimeString('en-US'));
       }
     </script>
   </body>
