@@ -12,11 +12,6 @@
       href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌕</text></svg>"
     />
     <script src="moon-phase.min.js"></script>
-    <script
-      src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
-      integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI="
-      crossorigin="anonymous"
-    ></script>
   </head>
   <body>
     <div class="center">
@@ -39,14 +34,10 @@
         today.getDate()
       );
 
-      let descArr = [];
-      for (let s of moon.name.split('-')) {
-        descArr.push(capitalizeFirstLetter(s));
-      }
+      setText('#time', today.toLocaleTimeString('en-US'));
 
-      $('#time').text(today.toLocaleTimeString('en-US'));
-
-      $('#date').text(
+      setText(
+        '#date',
         `${new Intl.DateTimeFormat('en-US', { weekday: 'short' }).format(
           today
         )} ${today.toLocaleDateString('en-us', {
@@ -56,17 +47,25 @@
         })}`
       );
 
-      $('#moon').text(moon.display);
+      setText('#moon', moon.display);
 
-      $('#description').text(`It's ${descArr.join(' ')}!`);
+      let descArr = [];
+      for (let s of moon.name.split('-')) {
+        descArr.push(capitalizeFirstLetter(s));
+      }
+
+      setText('#description', `It's ${descArr.join(' ')}!`);
 
       function capitalizeFirstLetter(str) {
         return str.charAt(0).toUpperCase() + str.slice(1);
       }
 
-      let intervalId = setInterval(updateTime, 1000);
-      function updateTime() {
-        $('#time').text(new Date().toLocaleTimeString('en-US'));
+      let intervalId = setInterval(function () {
+        setText('#time', new Date().toLocaleTimeString('en-US'));
+      }, 1000);
+
+      function setText(selector, value) {
+        document.querySelector(selector).textContent = value;
       }
     </script>
   </body>
