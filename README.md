@@ -1,6 +1,6 @@
 # Moon Phase
 
-A simple website to display today's moon phase
+A simple website to show today's moon phase
 
 ## Credits
 
